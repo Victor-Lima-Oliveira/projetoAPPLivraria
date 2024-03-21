@@ -16,8 +16,12 @@
                 @Html.DisplayNameFor(model => model.codLivro)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.RefAutor.nomeAutor)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.nomeLivro)
             </th>
+
             <th></th>
         </tr>
     </thead>
@@ -28,12 +32,16 @@
                 @Html.DisplayFor(modelItem => item.codLivro)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.nomeLivro)
+                @Html.DisplayFor(modelItem => item.RefAutor.nomeAutor)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nomeLivro)
+                </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Editar", "editarLivro", new {  id=item.codLivro  }) |
+                <!--@Html.ActionLink("Detalhar", "Details", new { /* id=item.PrimaryKey */ }) | -->
+                @Html.ActionLink("Excluir", "Delete", new {  id=item.codLivro  }, 
+                new {onclick = "return confirm('Deseja REALMENTE excluir este item?');"})
             </td>
         </tr>
 }
