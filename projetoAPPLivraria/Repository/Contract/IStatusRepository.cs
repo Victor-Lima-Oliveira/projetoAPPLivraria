@@ -6,5 +6,10 @@ namespace projetoAPPLivraria.Repository.Contract
     {
         IEnumerable<Status> obterStatus();
 
+        void cadastrar(Status status);
+
+        void atualizar(Status status);
+        void excluir(int codStatus);
+
     }
 }

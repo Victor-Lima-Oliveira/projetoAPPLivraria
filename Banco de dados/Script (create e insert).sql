@@ -2,7 +2,7 @@ create database dbLivraria;
 use dbLivraria;
 
 create table tbStatus(
-codStaus int primary key auto_increment,
+codStatus int primary key auto_increment,
 sta varchar(50));
 
 insert into tbstatus values (null, "Disponível"),(null,"Indisponível");
