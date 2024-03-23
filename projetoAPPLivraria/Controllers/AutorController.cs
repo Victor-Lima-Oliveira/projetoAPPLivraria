@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using projetoAPPLivraria.Models;
+using projetoAPPLivraria.Repository;
 using projetoAPPLivraria.Repository.Contract;
 
 namespace projetoAPPLivraria.Controllers
@@ -8,10 +9,12 @@ namespace projetoAPPLivraria.Controllers
     public class AutorController : Controller
     {
         private IAutorRepository _autorRepository;
+        private IStatusRepository _statusRepository;
 
-        public AutorController(IAutorRepository autoRepository)
+        public AutorController(IAutorRepository autoRepository, IStatusRepository statusRepository)
         {
             _autorRepository = autoRepository;
+            _statusRepository = statusRepository;
         }
 
         public IActionResult Index()
@@ -31,7 +34,7 @@ namespace projetoAPPLivraria.Controllers
         }
         public IActionResult editAutor(int id)
         {
-            var listaStatus = _autorRepository.obterStatus();
+            var listaStatus = _statusRepository.obterStatus();
             ViewBag.listaStatus = new SelectList(listaStatus, "codStatus", "nomeStatus");
 
             return View(_autorRepository.obterAutor(id));
@@ -42,6 +45,7 @@ namespace projetoAPPLivraria.Controllers
             _autorRepository.atualizar(autor);
             return RedirectToAction(nameof(Index));
         }
+
         public IActionResult deleteAutor(int id)
         {
             _autorRepository.excluir(id);
