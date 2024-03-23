@@ -9,10 +9,10 @@ namespace projetoAPPLivraria.Models
 
         [DisplayName ("Livro")]
         public String nomeLivro { get; set;}
+        [DisplayName("Autor")]
 
         public Autor RefAutor { get; set; }
 
-        [DisplayName("Autor")]
         public List<Autor> listaAutor { get; set;}
     }
 }

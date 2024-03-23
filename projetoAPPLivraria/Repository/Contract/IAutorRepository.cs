@@ -14,5 +14,7 @@ namespace projetoAPPLivraria.Repository.Contract
         void excluir(int id);
         IEnumerable<Status> obterStatus();
 
+
+
     }
 }

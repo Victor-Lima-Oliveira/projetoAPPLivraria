@@ -18,7 +18,21 @@ namespace projetoAPPLivraria.Repository
 
         public void atualizar(Autor autor)
         {
-            throw new NotImplementedException();
+            using (var conexao = new MySqlConnection(_Conexao))
+            {
+                conexao.Open();
+                MySqlCommand cmd = new MySqlCommand("UPDATE tbautor SET" +
+                    " nomeAutor = @nomeAutor," +
+                    " sta = @sta" +
+                    " where codAutor = @codAutor;", conexao);
+
+                cmd.Parameters.Add("@nomeAutor", MySqlDbType.VarChar).Value = autor.nomeAutor;
+                cmd.Parameters.Add("@sta", MySqlDbType.Int64).Value = autor.Refstatus.codStatus;
+                cmd.Parameters.Add("@codAutor", MySqlDbType.Int64).Value = autor.id;
+                cmd.ExecuteNonQuery();
+                conexao.Close();
+
+            }
         }
 
         public void cadastrar(Autor autor)
@@ -51,7 +65,7 @@ namespace projetoAPPLivraria.Repository
                 MySqlCommand cmd = new MySqlCommand("SELECT t1.codAutor, t1.nomeAutor, t2.codStatus, t2.sta " +
                     "FROM tbautor t1 " +
                     "INNER JOIN tbstatus t2 on t1.sta = t2.codStatus " +
-                    "where t1.codAutor = @codAutor ;");
+                    "where t1.codAutor = @codAutor ;", conexao);
 
                cmd.Parameters.Add("@CodAutor", MySqlDbType.UInt64).Value = id;
 
@@ -116,15 +130,15 @@ namespace projetoAPPLivraria.Repository
             using (var conexao = new MySqlConnection(_Conexao))
             {
                 conexao.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM tbstatus");
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM tbstatus", conexao);
 
-                MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter();
+                MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(cmd);
                 DataTable dataTable = new DataTable();
                 mySqlDataAdapter.Fill(dataTable);
 
                 conexao.Close();
 
-                foreach(DataRow dr in dataTable.Rows)
+                foreach (DataRow dr in dataTable.Rows)
                 {
                     status.Add(
                         new Status()
@@ -136,6 +150,6 @@ namespace projetoAPPLivraria.Repository
                 }
                 return status;
             }
-        } // end obterStaus()
+        } // end obterStatus()
     }// end autorRespository
 }
