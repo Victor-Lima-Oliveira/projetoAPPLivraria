@@ -25,11 +25,13 @@ namespace projetoAPPLivraria.Controllers
 
         public IActionResult CadAutor(Autor autor)
         {
-          
                 _autoRepository.cadastrar(autor);
                 return View();
-            
-
+        }
+        public IActionResult editAutor(int id)
+        {
+            _autoRepository.obterStatus();
+            return View();
         }
     }
 }

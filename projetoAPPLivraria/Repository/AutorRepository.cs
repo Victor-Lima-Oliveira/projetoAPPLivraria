@@ -3,6 +3,7 @@ using projetoAPPLivraria.Models;
 using projetoAPPLivraria.Repository.Contract;
 using System.Data;
 using System.Net.NetworkInformation;
+using System.Security.Cryptography.X509Certificates;
 
 namespace projetoAPPLivraria.Repository
 {
@@ -44,8 +45,35 @@ namespace projetoAPPLivraria.Repository
 
         public Autor obterAutor(int id)
         {
-            throw new NotImplementedException();
-        }
+            using(var conexao = new MySqlConnection(_Conexao))
+            {
+                conexao.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT t1.codAutor, t1.nomeAutor, t2.codStatus, t2.sta " +
+                    "FROM tbautor t1 " +
+                    "INNER JOIN tbstatus t2 on t1.sta = t2.codStatus " +
+                    "where t1.codAutor = @codAutor ;");
+
+               cmd.Parameters.Add("@CodAutor", MySqlDbType.UInt64).Value = id;
+
+                MySqlDataAdapter dataAdapter = new MySqlDataAdapter();
+                MySqlDataReader dataReader;
+
+                Autor autor = new Autor();
+                dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while(dataReader.Read())
+                {
+                    autor.id = (int)dataReader["codAutor"];
+                    autor.nomeAutor = (string)dataReader["nomeAutor"];
+                    autor.Refstatus = new Status()
+                    {
+                        codStatus = (int)dataReader["codStatus"],
+                        nomeStatus = (string)dataReader["sta"]
+                    };
+                }
+                return autor;
+            } // end using
+        } // end obterAutor()
 
         public IEnumerable<Autor> obterTodosOsAutores()
         {
@@ -80,8 +108,34 @@ namespace projetoAPPLivraria.Repository
                         });
                 }
                 return autors;
+            }             
+        } // end obterTodosOsAutores()
+        public IEnumerable<Status> obterStatus()
+        {
+            List<Status> status = new List<Status>();
+            using (var conexao = new MySqlConnection(_Conexao))
+            {
+                conexao.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM tbstatus");
+
+                MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter();
+                DataTable dataTable = new DataTable();
+                mySqlDataAdapter.Fill(dataTable);
+
+                conexao.Close();
+
+                foreach(DataRow dr in dataTable.Rows)
+                {
+                    status.Add(
+                        new Status()
+                        {
+                            codStatus = (int)dr["codStatus"],
+                            nomeStatus = (string)dr["sta"]
+                        }
+                    );
+                }
+                return status;
             }
-            
-        }
-    }
+        } // end obterStaus()
+    }// end autorRespository
 }

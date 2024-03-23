@@ -12,6 +12,7 @@ namespace projetoAPPLivraria.Repository.Contract
         void atualizar(Autor autor);
         Autor obterAutor(int id);
         void excluir(int id);
+        IEnumerable<Status> obterStatus();
 
     }
 }
