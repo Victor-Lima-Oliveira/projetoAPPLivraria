@@ -31,8 +31,8 @@
                 @Html.DisplayFor(modelItem => item.nomeStatus)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Editar", "atualizarStatus", new {  id=item.codStatus  }) |
+                    @Html.ActionLink("Deletar", "deletarStatus", new { id = item.codStatus })
             </td>
         </tr>
 }

@@ -17,7 +17,7 @@ namespace projetoAPPLivraria.Controllers
         public IActionResult Index()
         {
             
-            return View(_statusRepository.obterStatus());
+            return View(_statusRepository.obterTodosStatus());
         }
         public IActionResult cadStatus()
         {
@@ -27,6 +27,16 @@ namespace projetoAPPLivraria.Controllers
         public IActionResult cadStatus(Status status)
         {
             _statusRepository.cadastrar(status);
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult atualizarStatus(int id)
+        { 
+            return View(_statusRepository.obterStatus(id));
+        }
+        [HttpPost]
+        public IActionResult atualizarStatus(Status status)
+        {
+            _statusRepository.atualizar(status);
             return RedirectToAction(nameof(Index));
         }
     }

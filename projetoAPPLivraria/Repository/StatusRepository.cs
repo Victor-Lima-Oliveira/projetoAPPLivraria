@@ -1,4 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.AspNetCore.Identity;
+using MySql.Data.MySqlClient;
+using NuGet.Protocol.Plugins;
 using projetoAPPLivraria.Models;
 using projetoAPPLivraria.Repository.Contract;
 using System.Data;
@@ -17,7 +19,17 @@ namespace projetoAPPLivraria.Repository
 
         public void atualizar(Status status)
         {
-            throw new NotImplementedException();
+            using (var conexao = new MySqlConnection(_Conexao))
+            {
+                conexao.Open();
+                MySqlCommand cmd = new MySqlCommand("UPDATE tbstatus SET sta = @nomeStatus WHERE codStatus = @codStatus;", conexao);
+
+                cmd.Parameters.Add("@nomeStatus", MySqlDbType.VarChar).Value = status.nomeStatus;
+                cmd.Parameters.Add("@codStatus", MySqlDbType.Int64).Value = status.codStatus;
+
+                cmd.ExecuteNonQuery();
+                conexao.Close();
+            }
         } // end Atualizar
 
         public void cadastrar(Status status)
@@ -39,7 +51,33 @@ namespace projetoAPPLivraria.Repository
             throw new NotImplementedException();
         } // end Excluir
 
-        public IEnumerable<Status> obterStatus()
+        public Status obterStatus(int id)
+        {
+            using (var conexao = new MySqlConnection(_Conexao))
+            {
+                conexao.Open();
+                MySqlCommand cmd = new MySqlCommand(" SELECT * FROM tbstatus where codStatus = @codStatus;", conexao);
+
+                cmd.Parameters.Add("@codStatus", MySqlDbType.Int64).Value = id;             
+
+                MySqlDataReader dataReader;
+                Status status = new Status();
+
+                dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                
+
+                while (dataReader.Read())
+                {
+                    status.codStatus = (int)dataReader["codStatus"];
+                    status.nomeStatus = (string)dataReader["sta"];
+                }
+                conexao.Close();
+
+                return status;
+            }// end obterStatus()
+        }
+
+        public IEnumerable<Status> obterTodosStatus()
         {
             List<Status> status = new List<Status>();
             using (var conexao = new MySqlConnection(_Conexao))

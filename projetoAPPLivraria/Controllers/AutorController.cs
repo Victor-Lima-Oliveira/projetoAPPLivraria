@@ -34,7 +34,7 @@ namespace projetoAPPLivraria.Controllers
         }
         public IActionResult editAutor(int id)
         {
-            var listaStatus = _statusRepository.obterStatus();
+            var listaStatus = _statusRepository.obterTodosStatus();
             ViewBag.listaStatus = new SelectList(listaStatus, "codStatus", "nomeStatus");
 
             return View(_autorRepository.obterAutor(id));
