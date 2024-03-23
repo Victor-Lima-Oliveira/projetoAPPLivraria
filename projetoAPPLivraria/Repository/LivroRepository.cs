@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using projetoAPPLivraria.Repository.Contract;
 using System.Data;
+using System.Net.NetworkInformation;
 
 namespace projetoAPPLivraria.Repository
 {
@@ -65,8 +66,10 @@ namespace projetoAPPLivraria.Repository
             using(var conexao = new MySqlConnection(_conexaoMySql))
             {
                 conexao.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT  t1.codLivro,  t1.nomeLivro,  t1.codAutor,  t2.nomeAutor,  t2.sta " +
-                    " FROM tblivro t1  INNER JOIN  tbautor t2 on  t1.codAutor = t2.codAutor where t1.codLivro = @codLivro", conexao);
+                MySqlCommand cmd = new MySqlCommand("SELECT  t1.codLivro,  t1.nomeLivro,  t2.codAutor,  t2.nomeAutor,  t3.sta, t3.codStatus " + 
+                    "FROM tblivro t1 INNER JOIN  tbautor t2 on  t1.codAutor = t2.codAutor " +   
+                    "INNER JOIN tbstatus t3 on t3.codStatus = t2.sta "+
+                    "where t1.codLivro = 2; ", conexao);
 
                 cmd.Parameters.AddWithValue("@codLivro", id);
 
@@ -84,7 +87,10 @@ namespace projetoAPPLivraria.Repository
                     {
                         id = Convert.ToInt32(dataReader["codautor"]),
                         nomeAutor = (string)(dataReader["nomeAutor"]),
-                        status = Convert.ToInt32(dataReader["sta"])
+                        Refstatus = new Status() {
+                            codStatus = (int) dataReader["codStatus"],
+                            nomeStatus = (string) dataReader["sta"]
+                        }
                     };
                 }
                 return livro;
@@ -97,7 +103,9 @@ namespace projetoAPPLivraria.Repository
             using(var conexao = new MySqlConnection(_conexaoMySql))
             {
                 conexao.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM tblivro as t1 INNER JOIN  tbautor as t2 on t1.codAutor = t2.codAutor", conexao);
+                MySqlCommand cmd = new MySqlCommand("SELECT  t1.codLivro,  t1.nomeLivro,  t2.codAutor,  t2.nomeAutor,  t3.sta, t3.codStatus " +
+                    "FROM tblivro t1 INNER JOIN  tbautor t2 on  t1.codAutor = t2.codAutor " +
+                    "INNER JOIN tbstatus t3 on t3.codStatus = t2.sta ", conexao);
 
                 MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(cmd);
                 DataTable dataTable = new DataTable();
@@ -116,9 +124,13 @@ namespace projetoAPPLivraria.Repository
                             {
                                 id = Convert.ToInt32(dr["codAutor"]),
                                 nomeAutor = (string)(dr["nomeAutor"]),
-                                status = Convert.ToInt32(dr["sta"])
+                                Refstatus = new Status()
+                                {
+                                    codStatus = (int)dr["codStatus"],
+                                    nomeStatus = (String) dr["sta"]
+                                }
                             },
-                        });
+                        }); ;
                };
                 return livros;
             }

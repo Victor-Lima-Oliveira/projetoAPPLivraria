@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.nomeAutor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.status)
+                @Html.DisplayNameFor(model => model.Refstatus)
             </th>
             <th></th>
         </tr>
@@ -34,7 +34,7 @@
                 @Html.DisplayFor(modelItem => item.nomeAutor)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.status)
+                @Html.DisplayFor(modelItem => item.Refstatus.nomeStatus)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

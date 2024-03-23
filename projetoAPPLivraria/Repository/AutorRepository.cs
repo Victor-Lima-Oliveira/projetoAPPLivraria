@@ -2,6 +2,7 @@
 using projetoAPPLivraria.Models;
 using projetoAPPLivraria.Repository.Contract;
 using System.Data;
+using System.Net.NetworkInformation;
 
 namespace projetoAPPLivraria.Repository
 {
@@ -28,7 +29,7 @@ namespace projetoAPPLivraria.Repository
                 MySqlCommand cmd = new MySqlCommand("insert into tbAutor ( nomeAutor, sta) values(@nomeAutor, @sta);", conexao);
 
                 cmd.Parameters.Add("@nomeAutor", MySqlDbType.VarChar).Value = autor.nomeAutor;
-                cmd.Parameters.Add("@sta", MySqlDbType.VarChar).Value = autor.status;
+                cmd.Parameters.Add("@sta", MySqlDbType.VarChar).Value = autor.Refstatus;
 
                 cmd.ExecuteNonQuery();
                 conexao.Close();
@@ -52,7 +53,9 @@ namespace projetoAPPLivraria.Repository
             using (var conexao = new MySqlConnection(_Conexao))
             {
                 conexao.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from tbautor", conexao);
+                MySqlCommand cmd = new MySqlCommand("SELECT t1.codAutor, t1.nomeAutor, t2.codStatus, t2.sta " +
+                    "FROM tbautor t1 " +
+                    "INNER JOIN tbstatus t2 on t1.sta = t2.codStatus;", conexao);
 
                 MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(cmd); 
 
@@ -69,7 +72,11 @@ namespace projetoAPPLivraria.Repository
                         {
                             id = Convert.ToInt32(dr["codAutor"]),
                             nomeAutor = (string)(dr["nomeAutor"]),
-                            status = Convert.ToInt32(dr["sta"])
+                            Refstatus = new Status()
+                            {
+                                codStatus = (int)dr["codStatus"],
+                                nomeStatus = (String)dr["sta"]
+                            }
                         });
                 }
                 return autors;
