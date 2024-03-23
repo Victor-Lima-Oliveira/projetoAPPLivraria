@@ -42,5 +42,10 @@ namespace projetoAPPLivraria.Controllers
             _autorRepository.atualizar(autor);
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult deleteAutor(int id)
+        {
+            _autorRepository.excluir(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.AspNetCore.Identity;
+using MySql.Data.MySqlClient;
 using projetoAPPLivraria.Models;
 using projetoAPPLivraria.Repository.Contract;
 using System.Data;
@@ -54,7 +55,15 @@ namespace projetoAPPLivraria.Repository
 
         public void excluir(int id)
         {
-            throw new NotImplementedException();
+            using (var conexao =  new MySqlConnection(_Conexao))
+            {
+                conexao.Open();
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM tbautor where codAutor = @codAutor", conexao);
+                
+                cmd.Parameters.Add("@codAutor", MySqlDbType.Int64).Value = id;
+                cmd.ExecuteNonQuery();
+                conexao.Close();
+            }
         }
 
         public Autor obterAutor(int id)
