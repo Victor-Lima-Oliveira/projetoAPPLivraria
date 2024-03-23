@@ -58,11 +58,17 @@ namespace projetoAPPLivraria.Repository
             using (var conexao =  new MySqlConnection(_Conexao))
             {
                 conexao.Open();
-                MySqlCommand cmd = new MySqlCommand("DELETE FROM tbautor where codAutor = @codAutor", conexao);
-                
-                cmd.Parameters.Add("@codAutor", MySqlDbType.Int64).Value = id;
-                cmd.ExecuteNonQuery();
-                conexao.Close();
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand("DELETE FROM tbautor WHERE codAutor = @codAutor", conexao);
+
+                    cmd.Parameters.Add("@codAutor", MySqlDbType.Int64).Value = id;
+                    cmd.ExecuteNonQuery();
+                }catch(Exception ex)
+                {
+
+                }
+                finally { conexao.Close(); }
             }
         }
 

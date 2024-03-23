@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Crmf;
 using projetoAPPLivraria.Models;
 using projetoAPPLivraria.Repository.Contract;
 
@@ -39,5 +40,15 @@ namespace projetoAPPLivraria.Controllers
             _statusRepository.atualizar(status);
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult deleteAutor(int id)
+        {
+            String retorno = _statusRepository.excluir(id);
+            if (retorno != null)
+                TempData["mensagemErro"] = retorno;
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

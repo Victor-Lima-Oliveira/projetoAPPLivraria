@@ -46,9 +46,30 @@ namespace projetoAPPLivraria.Repository
             }
         } // end Cadastrar
 
-        public void excluir(int codStatus)
+        public String excluir(int codStatus)
         {
-            throw new NotImplementedException();
+            
+            using (var conexao = new MySqlConnection(_Conexao))
+            {
+                try
+                {
+                    conexao.Open();
+                    MySqlCommand cmd = new MySqlCommand("DELETE FROM tbstatus WHERE codstatus = @codStatus", conexao);
+
+                    cmd.Parameters.AddWithValue("@codStatus", codStatus);
+                    cmd.ExecuteNonQuery();
+                    return null;
+                }catch(Exception ex)
+                {
+
+                    // Erro de apagar uma foreign key
+                    if (ex.Message.Length > 5)
+                        return "Esse status está sendo utilizado, não foi possível deletar!";
+                    else
+                        return "Erro: Chame um técnico";
+                }
+                finally { conexao.Close(); }
+            }
         } // end Excluir
 
         public Status obterStatus(int id)
