@@ -48,7 +48,11 @@ namespace projetoAPPLivraria.Controllers
 
         public IActionResult deleteAutor(int id)
         {
-            _autorRepository.excluir(id);
+
+            String retorno = _autorRepository.excluir(id);
+            if (retorno != null)
+                TempData["mensagemErro"] = retorno;
+
             return RedirectToAction(nameof(Index));
         }
     }

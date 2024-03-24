@@ -69,7 +69,7 @@ namespace projetoAPPLivraria.Repository
                 MySqlCommand cmd = new MySqlCommand("SELECT  t1.codLivro,  t1.nomeLivro,  t2.codAutor,  t2.nomeAutor,  t3.sta, t3.codStatus " + 
                     "FROM tblivro t1 INNER JOIN  tbautor t2 on  t1.codAutor = t2.codAutor " +   
                     "INNER JOIN tbstatus t3 on t3.codStatus = t2.sta "+
-                    "where t1.codLivro = 2; ", conexao);
+                    "where t1.codLivro = @codLivro; ", conexao);
 
                 cmd.Parameters.AddWithValue("@codLivro", id);
 

@@ -6,12 +6,14 @@ namespace projetoAPPLivraria.Repository.Contract
     {
 
 
-        IEnumerable<Autor> obterTodosOsAutores();
+       
         void cadastrar (Autor autor);
 
         void atualizar(Autor autor);
+        
+        String excluir(int id);
         Autor obterAutor(int id);
-        void excluir(int id);
+        IEnumerable<Autor> obterTodosOsAutores();
 
 
 

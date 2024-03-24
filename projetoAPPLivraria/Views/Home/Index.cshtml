@@ -1,8 +1,38 @@
 ﻿@{
-    ViewData["Title"] = "Livraria BI";
+    ViewData["Title"] = "";
 }
 
 <div class="text-center">
     <h1 class="display-4">Seja-bem vinde</h1>
     <p>Essa livraria é responsável pela contribuição científica e literária, de diversos autores nacionais e internacionais </p>
 </div>
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
+    <div class="carousel-inner" style="height: 70vh">
+        <div class="carousel-item active">
+            <img style="height: 100%; width: 100%" src="~/img/carrossel1.jpg" alt="Primeiro slide">
+        </div>
+        <div class="carousel-item">
+            <img style="height: 100%; width: 100%" src="~/img/carrossel2.jpg" alt="Segundo slide">
+        </div>
+        <div class="carousel-item">
+            <img style="height: 100%; width: 100%" src="~/img/carrossel3.jpg" alt="Terceiro slide">
+        </div>
+
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Anterior</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Próximo</span>
+    </a>
+</div>
+
+<!-- Adicione isso ao final do seu arquivo _Layout.cshtml ou à sua página específica -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+

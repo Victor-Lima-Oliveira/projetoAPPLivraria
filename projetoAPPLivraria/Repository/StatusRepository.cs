@@ -61,9 +61,9 @@ namespace projetoAPPLivraria.Repository
                     return null;
                 }catch(Exception ex)
                 {
-
-                    // Erro de apagar uma foreign key
-                    if (ex.Message.Length > 5)
+                    String mensagem = ex.Message;
+                    // Erro caso tente apagar uma foreign key
+                    if ( mensagem == "Cannot delete or update a parent row: a foreign key constraint fails (`dblivraria`.`tbautor`, CONSTRAINT `tbautor_ibfk_1` FOREIGN KEY (`sta`) REFERENCES `tbstatus` (`codStatus`))")
                         return "Esse status está sendo utilizado, não foi possível deletar!";
                     else
                         return "Erro: Chame um técnico";

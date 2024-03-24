@@ -1,7 +1,7 @@
 ﻿@model projetoAPPLivraria.Models.Autor
 
 @{
-    ViewData["Title"] = "Cadastro de autor";
+    ViewData["Title"] = "- Cadastro de autor";
 }
 
 <h1>Cadastro de autor</h1>
@@ -21,9 +21,8 @@
                 <input asp-for="Refstatus" class="form-control" />
                 <span asp-validation-for="Refstatus" class="text-danger"></span>
             </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" />
+            <div class="form-group" style="margin-top: 10px; margin-bottom: 10px">
+                <input type="submit" value="Adicionar" class="btn btn-success" />
             </div>
         </form>
     </div>

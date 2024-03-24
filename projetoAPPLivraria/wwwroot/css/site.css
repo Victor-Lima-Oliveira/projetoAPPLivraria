@@ -18,15 +18,22 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
-  background-color: #ff9e1;
+    margin-bottom: 60px;
+    background-color: #BEAFB1;
 }
 
 
-td a, td, th, p, h1{
+td a, td, th, p, h1, a{
     color: white;
 }
-a{
-    color:antiquewhite;
+label {
+    color: white;
+    font-size: large
+}
+a hover{
+    color: white;
+}
+tbody, th, hr{
+    border-color: #4b3621;
 }
 

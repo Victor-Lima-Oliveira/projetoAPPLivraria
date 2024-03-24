@@ -1,10 +1,16 @@
 ﻿@model IEnumerable<projetoAPPLivraria.Models.Autor>
 
 @{
-    ViewData["Title"] = "Lista de usuários";
+    ViewData["Title"] = "- Lista de usuários";
 }
 
-<h1>Index</h1>
+<h1>Autores</h1>
+@if (TempData["mensagemErro"] != null)
+{
+    <div class="field-error" style="color:red;">
+        <h4>@TempData["mensagemErro"]</h4>
+    </div>
+}
 
 <p>
     <a asp-action="CadAutor">Adicionar novo autor</a>

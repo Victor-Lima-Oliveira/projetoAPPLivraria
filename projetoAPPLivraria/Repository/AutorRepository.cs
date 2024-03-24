@@ -53,7 +53,7 @@ namespace projetoAPPLivraria.Repository
             }
         }
 
-        public void excluir(int id)
+        public String excluir(int id)
         {
             using (var conexao =  new MySqlConnection(_Conexao))
             {
@@ -64,8 +64,14 @@ namespace projetoAPPLivraria.Repository
 
                     cmd.Parameters.Add("@codAutor", MySqlDbType.Int64).Value = id;
                     cmd.ExecuteNonQuery();
+                    return null;
                 }catch(Exception ex)
                 {
+                    String menssage = ex.Message;
+                    if (menssage == "Cannot delete or update a parent row: a foreign key constraint fails (`dblivraria`.`tblivro`, CONSTRAINT `tblivro_ibfk_1` FOREIGN KEY (`codautor`) REFERENCES `tbautor` (`codAutor`))")
+                        return "Esse autor possui livros cadastrados, não é possível deletar";
+                    else
+                        return "Erro: Chame um técnico";
 
                 }
                 finally { conexao.Close(); }
