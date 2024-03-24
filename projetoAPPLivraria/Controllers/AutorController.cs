@@ -23,6 +23,9 @@ namespace projetoAPPLivraria.Controllers
         }
 
         public IActionResult CadAutor() {
+            var listaStatus = _statusRepository.obterTodosStatus();
+            ViewBag.listaStatus = new SelectList(listaStatus, "codStatus", "nomeStatus");
+
             return View();
         }
         [HttpPost]
@@ -30,7 +33,7 @@ namespace projetoAPPLivraria.Controllers
         public IActionResult CadAutor(Autor autor)
         {
                 _autorRepository.cadastrar(autor);
-                return View();
+                return RedirectToAction(nameof(Index));
         }
         public IActionResult editAutor(int id)
         {

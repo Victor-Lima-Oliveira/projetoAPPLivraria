@@ -45,7 +45,7 @@ namespace projetoAPPLivraria.Repository
                 MySqlCommand cmd = new MySqlCommand("insert into tbAutor ( nomeAutor, sta) values(@nomeAutor, @sta);", conexao);
 
                 cmd.Parameters.Add("@nomeAutor", MySqlDbType.VarChar).Value = autor.nomeAutor;
-                cmd.Parameters.Add("@sta", MySqlDbType.VarChar).Value = autor.Refstatus;
+                cmd.Parameters.Add("@sta", MySqlDbType.VarChar).Value = autor.Refstatus.codStatus;
 
                 cmd.ExecuteNonQuery();
                 conexao.Close();
